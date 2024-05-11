@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Reddit+Sans:ital,wght@0,200..900;1,200..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
+body {
+  background-color: #1e293b;
+}
+
+textarea::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 4px;
+	background-color: transparent;
+  animation: fade 1s;
+}
+
+textarea::-webkit-scrollbar
+{
+	width: 6px;
+	background-color: transparent;
+  animation: fade 1s;
+}
+
+textarea::-webkit-scrollbar-thumb
+{
+	border-radius: 4px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #16246b;
+  animation: fade 1s;
+}
+
+* {
+  font-family: 'Reddit Sans', sans-serif;
+}
