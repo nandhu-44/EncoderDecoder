@@ -24,5 +24,5 @@ export default defineConfig({
             util: "util",
         },
     },
-    base: './EncoderDecoder/',
+    base: '/EncoderDecoder/',
 })

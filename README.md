@@ -1,6 +1,6 @@
-# Encoder-Decoder
+# [EncoderDecoder](https://nandhu-44.github.io/EncoderDecoder/)
 
-This project is a simple command-line utility for encrypting and decrypting text using the `cipher-guard` library. It uses the `chalk` library for colored console output.
+This project is a simple utility _(web and command-line)_ for encrypting and decrypting text using the `cipher-guard` library. It uses the `chalk` library for colored console output.
 
 ## Installation
 
@@ -46,3 +46,15 @@ bun run compile
 ```
 
 This will create an executable file in the `dist` directory.
+
+## Webview
+
+The code for website is in the [`web`](/web/) directory. To start the website;
+
+```sh
+cd web && npm install && npm run dev
+```
+
+This will start the website on `localhost:5173`.
+
+The app is also viewable from [here](https://nandhu-44.github.io/EncoderDecoder/).

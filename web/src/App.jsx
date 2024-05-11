@@ -105,7 +105,7 @@ function App() {
           <span className="mx-2 text-lg">Encoder</span>
         </button>
         <button
-          className="bg-red-600  px-4 py-2 md:my-4 my-2 mx-1 rounded-lg flex flex-row items-center"
+          className="bg-blue-600  px-4 py-2 md:my-4 my-2 mx-1 rounded-lg flex flex-row items-center"
           onClick={() => {
             setType("decoder");
             setText("");
@@ -197,7 +197,7 @@ function App() {
             onChange={(event) => setText(event.target.value)}
           ></textarea>
           <button
-            className="bg-red-600 w-full p-2 m-2 rounded-lg"
+            className="bg-blue-600 w-full p-2 m-2 rounded-lg"
             onClick={() => {
               if (!salt || isNaN(key)) {
                 alert(
@@ -302,7 +302,7 @@ function App() {
           </form>
           <div className="flex flex-row lg:px-2 px-0">
             <button
-              className="px-4 py-2 bg-red-600 text-white rounded-md mt-4 font-semibold"
+              className="px-4 py-2 bg-red-500 text-white rounded-md mt-4 font-semibold"
               onClick={() => setOpenModal(false)}
             >
               Cancel
