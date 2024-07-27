@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Modal } from "flowbite-react";
 import { encrypt, decrypt } from "cipher-guard";
 import { PiTreeStructureFill } from "react-icons/pi";
-import { FaCode } from "react-icons/fa6";
+import { FaCode, FaEye, FaEyeSlash } from "react-icons/fa6";
 import { FiSettings } from "react-icons/fi";
 import { IoCopy } from "react-icons/io5";
 import { IoCheckmarkDoneOutline } from "react-icons/io5";
@@ -29,6 +29,8 @@ function App() {
   // Form fields
   const [newKey, setNewKey] = useState(null);
   const [newSalt, setNewSalt] = useState(null);
+
+  const [showSalt, setShowSalt] = useState(false);
 
   // Load key and salt from local storage.
   useEffect(() => {
@@ -62,11 +64,11 @@ function App() {
         {/* Header Section */}
         <header className="flex justify-between">
           <div className="flex flex-row items-center">
-            <FaCode className="w-6 h-6 lg:w-10 lg:h-10 text-amber-400 my-2  mx-2 lg:mx-4 font-light" />
+            <FaCode className="w-6 h-6 lg:w-10 lg:h-10 text-amber-400 my-2  mx-2 lg:mx-4 font-light hover:cursor-pointer" />
             <h1 className="lg:text-3xl text-2xl text-white">Encoder Decoder</h1>
           </div>
           <FiSettings
-            className="w-6 h-6 lg:w-8 lg:h-8 text-blue-400 my-2 mx-2 lg:mx-4 font-light hover:cursor-pointer"
+            className="w-6 h-6 lg:w-8 lg:h-8 text-blue-400 my-2 mx-2 lg:mx-4 font-light hover:cursor-pointer hover:invert"
             onClick={() => setOpenModal(true)}
           />
         </header>
@@ -131,8 +133,11 @@ function App() {
             onChange={(event) => setText(event.target.value)}
           ></textarea>
           <button
-            className="bg-emerald-600 w-full p-2 m-2 rounded-lg"
+            className={`bg-emerald-600 w-full p-2 m-2 rounded-lg ${
+              text ? "" : "opacity-50 cursor-not-allowed"
+            }`}
             onClick={() => {
+              if (!text) return;
               if (!salt || isNaN(key)) {
                 alert(
                   "Please configure the key and salt first by clicking the settings icon."
@@ -197,8 +202,11 @@ function App() {
             onChange={(event) => setText(event.target.value)}
           ></textarea>
           <button
-            className="bg-blue-600 w-full p-2 m-2 rounded-lg"
+            className={`bg-blue-600 w-full p-2 m-2 rounded-lg ${
+              text ? "" : "opacity-50 cursor-not-allowed"
+            }`}
             onClick={() => {
+              if (!text) return;
               if (!salt || isNaN(key)) {
                 alert(
                   "Please configure the key and salt first by clicking the settings icon."
@@ -265,7 +273,10 @@ function App() {
         show={openModal}
         dismissible
         className="bg-black backdrop-blur-sm pt-20 md:pt-0"
-        onClose={() => setOpenModal(false)}
+        onClose={() => {
+          setShowSalt(false);
+          setOpenModal(false);
+        }}
       >
         <Modal.Header className="bg-slate-700">
           <span className="text-white rounded-t-md font-bold text-xl px-2 border-b-slate-800">
@@ -285,30 +296,40 @@ function App() {
               placeholder="A number between 0 and 127 (inclusive)"
               value={newKey}
               onChange={(event) => setNewKey(event.target.value)}
-              className="bg-slate-900 text-white rounded-md placeholder-gray-500"
+              className="bg-slate-900 text-white rounded-md placeholder-gray-500 w-full my-2" // Add 'w-full' and 'my-2'
             />
             <label htmlFor="salt" className="mt-2">
               Salt
             </label>
-            <input
-              type="password"
-              name="salt"
-              id="salt"
-              placeholder="A secret string to use for ciphering"
-              value={newSalt}
-              onChange={(event) => setNewSalt(event.target.value)}
-              className="bg-slate-900 text-white rounded-md placeholder-gray-500"
-            />
+            <div className="flex flex-row items-center w-full my-2 relative">
+              {" "}
+              {/* Change to 'w-full' and add 'relative' */}
+              <input
+                type={showSalt ? "text" : "password"}
+                name="salt"
+                id="salt"
+                placeholder="A secret string to use for ciphering"
+                value={newSalt}
+                onChange={(event) => setNewSalt(event.target.value)}
+                className="bg-slate-900 text-white rounded-md placeholder-gray-500 w-full pr-10" // Ensure this also has 'w-full' and add 'pr-10'
+              />
+              <div
+                className="absolute right-3 cursor-pointer"
+                onClick={() => setShowSalt(!showSalt)}
+              >
+                {showSalt ? <FaEye /> : <FaEyeSlash />}
+              </div>
+            </div>
           </form>
           <div className="flex flex-row lg:px-2 px-0">
             <button
-              className="px-4 py-2 bg-red-500 text-white rounded-md mt-4 font-semibold"
+              className="px-4 py-2 bg-red-500 text-white rounded-md mt-4 font-semibold select-none"
               onClick={() => setOpenModal(false)}
             >
               Cancel
             </button>
             <button
-              className="px-4 py-2 bg-blue-600 text-white rounded-md mt-4 ml-2 font-semibold"
+              className="px-4 py-2 bg-blue-600 text-white rounded-md mt-4 ml-2 font-semibold select-none"
               onClick={() => {
                 if (isNaN(newKey) || newKey < 0 || newKey > 127) {
                   alert("Please enter a valid key between 0 and 127.");
@@ -329,6 +350,7 @@ function App() {
                 setKey(parseInt(newKey));
                 setSalt(newSalt);
                 setOpenModal(false);
+                setShowSalt(false);
               }}
             >
               Save
